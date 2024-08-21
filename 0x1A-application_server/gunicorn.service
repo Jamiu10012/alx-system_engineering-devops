@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn instance to serve application
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/AirBnB_clone_v4
+Environment="PATH=/path/to/venv/bin"
+ExecStart=/home/ubuntu/.local/bin/gunicorn --workers 3 --bind 0.0.0.0:5003 --access-logfile /tmp/airbnb-access.log --log-file /tmp/airbnb-error.log web_dynamic.2-hbnb:app
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
